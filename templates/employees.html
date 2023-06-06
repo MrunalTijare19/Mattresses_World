@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Employee Details{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h1 class="font-weight-bold text-center m-2 p-2 border border-dark rounded">Employees</h1>
+    <table class="table table-success table-striped table-bordered border-dark m-2 mt-4">
+        
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Mobile No</th>
+            <th scope="col">Address</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Edit/Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for e in employee %}
+          <tr>
+            <th scope="row">{{e.employee_id}}</th>
+            <td>{{e.employee_name}}</td>
+            <td>{{e.employee_mobile_no}}</td>
+            <td>{{e.employee_address}}</td>
+            <td>{{e.employee_salary}}</td>
+            <td><button class="bg-success" type="submit">Edit</button>
+              <button class="bg-danger" type="submit">Delete</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+</div>                    
+{% endblock body %}

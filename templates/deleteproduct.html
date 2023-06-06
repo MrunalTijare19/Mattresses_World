@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Delete Product{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="container col border border-dark m-4 p-4 bg-dark text-white">
+                
+                <div class="container py-5">
+                    <h1>Delete Product</h1>
+                    <form method="POST">
+                        {% csrf_token %}
+                        Are you want to delete this item ?
+                        <button class="btn btn-primary" type="submit">Yes</button>
+                        <a href="/"><button class="btn btn-primary" type="submit">Cancel</button></a>
+                    </form>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock body %}

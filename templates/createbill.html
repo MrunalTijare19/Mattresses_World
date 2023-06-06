@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Create Bill{% endblock title %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            {% comment %} <div class="col-3"></div> {% endcomment %}
+
+            <div class="container col border border-dark m-4 p-4 bg-dark text-white">
+                
+                <div class="container py-5">
+                    <h1>Bill</h1>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </form>
+                </div>
+
+
+            </div>
+            {% comment %} <div class="col-3"></div> {% endcomment %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock body %}
+
+

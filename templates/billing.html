@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Bill Details{% endblock title %}
+
+{% block body %}
+<div class="container">
+    <h1 class="font-weight-bold text-center m-2 p-2 border border-dark rounded">Bill</h1>
+    <table class="table table-success table-striped table-bordered border-dark m-2 mt-4">
+        
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Employee</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Product</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Bill Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in bill %}
+          <tr>
+            <th scope="row">{{b.bill_id}}</th>
+            <td>{{b.employee}}</td>
+            <td>{{b.customer}}</td>
+            <td>{{b.product}}</td>
+            <td>{{b.product_price}}</td>
+            <td>{{b.quantity}}</td>
+            <td>{{b.bill_amount}}</td>
+          </tr>
+          
+          {% endfor %}
+          {% comment %} <tr>
+            <th scope="row">Total</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th scope="row">{{}}</th>
+          </tr> {% endcomment %}
+
+        </tbody>
+      </table>
+
+</div>                    
+{% endblock body %}
