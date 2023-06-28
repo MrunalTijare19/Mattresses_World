@@ -12,7 +12,10 @@
             <h5 class="card-title border border-dark bg-dark">Product</h5>
             <div class="card-body">
                 <h6 class="card-subtitle mb-2">Total Product</h6>
-                <p class="card-text h1">{{product.count}}</p>
+                {% comment %} <p class="card-text h1">{{product.count}}</p> {% endcomment %}
+                <p class="card-text h1">{{ product_total_quantity }}</p>
+                <p class="card-text h6 text-white bg-danger">Sell:{{ order_total_quantity }}</p>
+                <p class="card-text h6 text-white bg-success">Balance:{{ Balance }}</p>
             </div>
             <a href="{% url 'product' %}" class="card-link text-white bg-dark">More Info</a>
         </div>
@@ -20,7 +23,9 @@
             <h5 class="card-title border border-dark bg-dark">Employees</h5>
             <div class="card-body">
                 <h6 class="card-subtitle mb-2">Total Employees</h6>
+                <br>
                 <p class="card-text h1">{{employee.count}}</p>
+                <br>
             </div>
             <a href="{% url 'employee' %}" class="card-link text-white bg-dark">More Info</a>
         </div>
@@ -28,7 +33,9 @@
             <h5 class="card-title border border-dark bg-dark">Customer</h5>
             <div class="card-body">
                 <h6 class="card-subtitle mb-2">Total Customer</h6>
+                <br>
                 <p class="card-text h1">{{customer.count}}</p>
+                <br>
             </div>
             <a href="{% url 'customer' %}" class="card-link text-white bg-dark">More Info</a>
         </div>
@@ -36,7 +43,10 @@
             <h5 class="card-title border border-dark bg-dark">Order</h5>
             <div class="card-body">
                 <h6 class="card-subtitle mb-2">Total Order</h6>
-                <p class="card-text h1">{{bill.count}}</p>
+                {% comment %} <p class="card-text h1">{{bill.count}}</p> {% endcomment %}
+                <br>
+                <p class="card-text h1">{{order_total_quantity}}</p>
+                <br>
             </div>
             <a href="{% url 'bill' %}" class="card-link text-white bg-dark">More Info</a>
         </div>

@@ -14,7 +14,6 @@
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Total Price</th>
-            <th scope="col">Edit/Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -25,16 +24,19 @@
             <td>{{p.price}}</td>
             <td>{{p.quantity}}</td>
             <td>{{p.total_price}}</td>
-            <td>
-              <a href="#"><button class="bg-success" type="submit">Edit</button></a>
-              <a href="#"><button class="bg-danger" type="submit">Delete</button></td></a>
-              
-              
           </tr>
-          
           {% endfor %}
+          <tr>
+            <th></th>
+            <th></th>
+            <th>Total</th>
+            <th>{{ total_quantity }}</th>
+            <th>{{ total_price_sum }}</th>
+          </tr>
+
         </tbody>
       </table>
+      
 
 </div>                    
 {% endblock body %}

@@ -11,7 +11,7 @@ from .forms.addemployee import AddEmployeeForm
 from .forms.addcustomer import AddCustomerForm
 from .forms.bill import CreateBillForm
 from django.http import HttpResponse
-
+from django.db import models
 
 
 
@@ -29,10 +29,8 @@ def login(request):
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
+# ============================================================================
 
-
-def home(request):
-    return render(request,'test.html')
 
 @login_required(login_url='login')
 def dashboard(request):
@@ -40,12 +38,19 @@ def dashboard(request):
     employee = Employee.objects.all()
     customer = Customer.objects.all()
     bill = Billing.objects.all()
-    return render(request,'dashboard.html',context={'product':product,'employee':employee, 'customer':customer, 'bill':bill})
+    product_total_quantity = Product.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    order_total_quantity = Billing.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    Balance = product_total_quantity - order_total_quantity
+    return render(request,'dashboard.html',context={'product':product,'employee':employee, 'customer':customer, 'bill':bill, 'product_total_quantity': product_total_quantity,'order_total_quantity':order_total_quantity, 'Balance':Balance})
+
+# ============================================================================
 
 @login_required(login_url='login')
 def product(request):
     product = Product.objects.all()
-    return render(request,'products.html',context={'product':product})
+    total_quantity = Product.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    total_price_sum = sum(product.total_price() for product in product)
+    return render(request,'products.html',context={'product':product, 'total_quantity': total_quantity, 'total_price_sum':total_price_sum})
 
 @login_required(login_url='login')
 def addproduct(request):
@@ -70,21 +75,7 @@ def addproduct(request):
     
     return render(request,'addproduct.html',{'form': form})
 
-def update_product(request,id):
-    context ={}
-    return render(request,'updateproduct.html',context)
-    
-
-
-def delete_product(request,id):
-    context ={}
-    obj = get_object_or_404(Product, id = id)
-    if request.method =="POST":
-        obj.delete()
-        return redirect('product')
-    return render(request,'teproduct.html',context)
-
-
+# ============================================================================
 
 @login_required(login_url='login')
 def employee(request):
@@ -112,6 +103,8 @@ def addemployee(request):
         
     return render(request,'addemployee.html',{'form':form})
 
+# ============================================================================
+
 @login_required(login_url='login')
 def customer(request):
     customer = Customer.objects.all()
@@ -134,6 +127,8 @@ def addcustomer(request):
     else:
         form = AddCustomerForm()
     return render(request,'addcustomer.html',{'form':form})
+
+# ============================================================================
 
 @login_required(login_url='login')
 def bill(request):
@@ -174,7 +169,7 @@ def createbill(request):
     
     return render(request, 'createbill.html', {'form': form})
 
-
+# ============================================================================
 
 def logout(request):
     auth_logout(request)
