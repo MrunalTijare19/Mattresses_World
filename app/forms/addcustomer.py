@@ -12,14 +12,8 @@ class AddCustomerForm(forms.ModelForm):
             'customer_address':forms.Textarea(attrs={'class':'form-control'}),
         }
         
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if instance.pk is None:  # Check if the instance is being created (not updated)
-            last_customer = Customer.objects.order_by('-customer_id').first()
-            if last_customer:
-                instance.customer_id = last_customer.customer_id + 1
-            else:
-                instance.customer_id = 1
-        if commit:
-            instance.save()
-        return instance
+    def clean_quantity(self):
+        customer_mob_no = self.cleaned_data['customer_mob_no']
+        if customer_mob_no < 0:
+            raise forms.ValidationError("Mobile number cannot be negative.")
+        return customer_mob_no

@@ -24,6 +24,7 @@ def login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth_login(request, user)
+                messages.info(request, "Login successfully!")
                 return redirect('dashboard')  
     else:
         form = LoginForm()
@@ -42,6 +43,9 @@ def dashboard(request):
         
     if order_total_quantity is None:
         order_total_quantity = 0
+    
+    if product_total_quantity < order_total_quantity:
+        return HttpResponse('Check Product Quantity')     
     
     Balance = product_total_quantity - order_total_quantity
     
@@ -172,21 +176,38 @@ def bill(request):
     
 #     return render(request,'createbill.html',{'form':form})
 
+
 @login_required(login_url='login')
 def createbill(request):
+    product_total_quantity = Product.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    order_total_quantity = Billing.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+
+    if product_total_quantity is None:
+        product_total_quantity = 0
+
+    if order_total_quantity is None:
+        order_total_quantity = 0
+
     if request.method == 'POST':
         form = CreateBillForm(request.POST)
         if form.is_valid():
+            quantity = form.cleaned_data['quantity']
+            if product_total_quantity - order_total_quantity - quantity < 0:
+                messages.error(request, 'Product quantity not enough to create a bill.')
+                return redirect('dashboard')
             form.save()
             return redirect('bill')
     else:
         form = CreateBillForm()
-    
+
     return render(request, 'createbill.html', {'form': form})
+
+    
+    
 
 # ============================================================================
 
 def logout(request):
     auth_logout(request)
-    messages.info(request, "Logged out successfully!")
+    # messages.info(request, "Logged out successfully!")
     return redirect("login")

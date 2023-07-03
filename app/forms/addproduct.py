@@ -13,7 +13,17 @@ class AddProductForm(forms.ModelForm):
             'quantity': forms.NumberInput(attrs={'class':'form-control', 'type': 'number'}),
         }
         
+    def clean_quantity(self):
+        price = self.cleaned_data['price']
+        if price < 0:
+            raise forms.ValidationError("Product Price cannot be negative.")
+        return price
         
+    def clean_quantity(self):
+        quantity = self.cleaned_data['quantity']
+        if quantity < 0:
+            raise forms.ValidationError("Product quantity cannot be negative.")
+        return quantity
         
         
         

@@ -14,6 +14,17 @@ class AddEmployeeForm(forms.ModelForm):
         }
 
 
-
+    def clean_quantity(self):
+        employee_mobile_no = self.cleaned_data['employee_mobile_no']
+        if employee_mobile_no < 0:
+            raise forms.ValidationError("Mobile number cannot be negative.")
+        return employee_mobile_no
+    
+    def clean_quantity(self):
+        employee_salary = self.cleaned_data['employee_salary']
+        if employee_salary < 0:
+            raise forms.ValidationError("Salary cannot be negative.")
+        return employee_salary
+    
 
 
