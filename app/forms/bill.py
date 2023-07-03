@@ -32,5 +32,6 @@ class CreateBillForm(forms.ModelForm):
         self.fields['customer'].widget.attrs['class'] = 'form-control'
         self.fields['product'].widget.attrs['class'] = 'form-control'
         self.fields['quantity'].widget.attrs['class'] = 'form-control'
+        self.fields['quantity'].widget.input_type = 'number'
     
 

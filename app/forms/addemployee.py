@@ -8,9 +8,9 @@ class AddEmployeeForm(forms.ModelForm):
         
         widgets = {
             'employee_name':forms.TextInput(attrs={'class':'form-control'}),
-            'employee_mobile_no':forms.NumberInput(attrs={'class':'form-control'}),
+            'employee_mobile_no':forms.NumberInput(attrs={'class':'form-control', 'type': 'number'}),
             'employee_address':forms.TextInput(attrs={'class':'form-control'}),
-            'employee_salary':forms.NumberInput(attrs={'class':'form-control'}),
+            'employee_salary':forms.NumberInput(attrs={'class':'form-control', 'type': 'number'}),
         }
 
 

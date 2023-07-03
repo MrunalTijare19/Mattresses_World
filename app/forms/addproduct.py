@@ -9,8 +9,8 @@ class AddProductForm(forms.ModelForm):
         widgets = {
             'product_name': forms.TextInput(attrs={'class':'form-control','Placeholder':'Product Name'}),
             'description': forms.Textarea(attrs={'class':'form-control'}),
-            'price': forms.NumberInput(attrs={'class':'form-control'}),
-            'quantity': forms.NumberInput(attrs={'class':'form-control'}),
+            'price': forms.NumberInput(attrs={'class':'form-control', 'type': 'number'}),
+            'quantity': forms.NumberInput(attrs={'class':'form-control', 'type': 'number'}),
         }
         
         

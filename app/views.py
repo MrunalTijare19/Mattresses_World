@@ -34,14 +34,29 @@ def login(request):
 
 @login_required(login_url='login')
 def dashboard(request):
+    product_total_quantity = Product.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    order_total_quantity = Billing.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
+    
+    if product_total_quantity is None:
+        product_total_quantity = 0
+        
+    if order_total_quantity is None:
+        order_total_quantity = 0
+    
+    Balance = product_total_quantity - order_total_quantity
+    
     product = Product.objects.all()
     employee = Employee.objects.all()
     customer = Customer.objects.all()
     bill = Billing.objects.all()
-    product_total_quantity = Product.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
-    order_total_quantity = Billing.objects.aggregate(total_quantity=models.Sum('quantity')).get('total_quantity', 0)
-    Balance = product_total_quantity - order_total_quantity
-    return render(request,'dashboard.html',context={'product':product,'employee':employee, 'customer':customer, 'bill':bill, 'product_total_quantity': product_total_quantity,'order_total_quantity':order_total_quantity, 'Balance':Balance})
+    
+    return render(request,'dashboard.html',context={
+        'product':product,
+        'employee':employee, 'customer':customer, 
+        'bill':bill, 
+        'product_total_quantity': product_total_quantity,'order_total_quantity':order_total_quantity, 
+        'Balance':Balance
+        })
 
 # ============================================================================
 
